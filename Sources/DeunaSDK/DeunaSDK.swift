@@ -8,9 +8,15 @@ import SystemConfiguration
 // MARK: - DeunaSDK Main Class
 public class DeunaSDK: NSObject, WKNavigationDelegate {
     
-    public enum ElementType: String {
-        case vault = "vault"
-        
+    @objc public enum ElementType: Int {
+        case vault
+
+        var rawValue: String {
+            switch self {
+            case .vault:
+                return "vault"
+            }
+        }
     }
     
     // MARK: - Public Nested Classes
@@ -41,14 +47,14 @@ public class DeunaSDK: NSObject, WKNavigationDelegate {
     internal var closeOnSuccess: Bool = true
     
     // MARK: - Private Properties
-    private var apiKey: String!
-    private var orderToken: String!
-    private var elementType: ElementType!
-    private var userToken: String!
-    private var elementURL: String = ""
-    private var actionMilliseconds: Int = 5000
-    private var isConfigured: Bool = false
-    private var keepLoaderVisible: Bool = false  // Property to determine if the loader should remain visible
+    internal var apiKey: String!
+    internal var orderToken: String?
+    internal var userToken: String?
+    internal var elementType: ElementType!
+    internal var elementURL: String = ""
+    internal var actionMilliseconds: Int = 5000
+    internal var isConfigured: Bool = false
+    internal var keepLoaderVisible: Bool = false  // Property to determine if the loader should remain visible
     internal var webViewController = UIViewController()
     
     private var scriptSource = """
@@ -84,8 +90,8 @@ public class DeunaSDK: NSObject, WKNavigationDelegate {
     // MARK: - Public Class Methods
     public class func config(
         apiKey: String,
-        orderToken: String,
-        userToken: String,
+        orderToken: String? = nil,
+        userToken: String? = nil,
         environment: Environment,
         closeButtonConfig: CloseButtonConfig? = nil,
         presentInModal: Bool? = nil,
@@ -108,7 +114,6 @@ public class DeunaSDK: NSObject, WKNavigationDelegate {
         shared.orderToken = orderToken
         shared.userToken = userToken
         shared.environment = environment
-        shared.elementType = elementType
         shared.closeButtonConfig = closeButtonConfig
         shared.shouldPresentInModal = actualPresentInModal
         shared.showCloseButton = actualShowCloseButton
@@ -164,7 +169,7 @@ public class DeunaSDK: NSObject, WKNavigationDelegate {
             DEUNAClientAPI.basePath = "https://api.dev.deuna.io:443"
         }
         // Fetch order details and set up the WebView
-        OrderAPI.getOrder(orderToken: orderToken, xApiKey: DeunaSDK.shared.apiKey) { (orderResponse, error) in
+        OrderAPI.getOrder(orderToken: orderToken!, xApiKey: DeunaSDK.shared.apiKey) { (orderResponse, error) in
             if error != nil{
                 return self.HandleError(error: error!)
             }
@@ -359,7 +364,7 @@ public class DeunaSDK: NSObject, WKNavigationDelegate {
     }
     
     // MARK: - Network Reachability
-    private var isNetworkAvailable: Bool {
+    internal var isNetworkAvailable: Bool {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)

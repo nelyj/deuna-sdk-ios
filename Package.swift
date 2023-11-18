@@ -16,7 +16,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/deuna-developers/deuna-ios-client", .upToNextMajor(from: "1.0.0")),
+        .package(url: "https://github.com/deuna-developers/deuna-ios-client", .upToNextMajor(from: "1.3.8")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.

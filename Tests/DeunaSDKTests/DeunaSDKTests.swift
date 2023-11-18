@@ -12,17 +12,15 @@ final class DeunaSDKTests: XCTestCase {
         let apiKey = "testApiKey"
         let orderToken = "testOrderToken"
         let userToken = "testUserToken"
-        let environment: DeunaSDK.Environment = .development
-        let elementType: DeunaSDK.ElementType = .saveCard
+        let environment: Environment = .development
         let closeButtonConfig = CloseButtonConfig()
 
-        DeunaSDK.config(apiKey: apiKey, orderToken: orderToken, userToken: userToken, environment: environment, elementType: elementType, closeButtonConfig: closeButtonConfig)
+        DeunaSDK.config(apiKey: apiKey, orderToken: orderToken, userToken: userToken, environment: environment, closeButtonConfig: closeButtonConfig)
 
         XCTAssertEqual(DeunaSDK.shared.apiKey, apiKey, "API Key should be set correctly.")
         XCTAssertEqual(DeunaSDK.shared.orderToken, orderToken, "Order Token should be set correctly.")
         XCTAssertEqual(DeunaSDK.shared.userToken, userToken, "User Token should be set correctly.")
         XCTAssertEqual(DeunaSDK.shared.environment, environment, "Environment should be set correctly.")
-        XCTAssertEqual(DeunaSDK.shared.elementType, elementType, "Element Type should be set correctly.")
         XCTAssertEqual(DeunaSDK.shared.closeButtonConfig?.title, closeButtonConfig.title, "CloseButtonConfig should be set correctly.")
     }
 

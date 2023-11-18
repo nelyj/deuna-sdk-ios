@@ -12,10 +12,10 @@
     {
       "identity" : "deuna-ios-client",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/DUNA-E-Commmerce/deuna-ios-client",
+      "location" : "https://github.com/deuna-developers/deuna-ios-client",
       "state" : {
-        "revision" : "c6b1ee32360d9c7ffa735d892fd5ca32b8e05835",
-        "version" : "1.3.16"
+        "revision" : "ce6308262b9416f30f7ccb6e2c7cd55740e1145e",
+        "version" : "1.3.8"
       }
     }
   ],

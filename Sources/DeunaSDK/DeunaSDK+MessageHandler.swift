@@ -12,6 +12,14 @@ extension DeunaSDK: WKScriptMessageHandler{
     // MARK: - WKScriptMessageHandler Method
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         let decoder = JSONDecoder()
+        
+        if let webViewManager = self.subWebView {
+            webViewManager.closeButtonConfig?.onClose = {
+                // Llamar a closeCheckout cuando se presione el botón de cerrar
+                self.closeCheckout()
+            }
+        }
+        
         if let jsonString = message.body as? String {
             if let jsonData = jsonString.data(using: .utf8) {
                 do {
@@ -70,7 +78,7 @@ extension DeunaSDK: WKScriptMessageHandler{
                         callbacks.onSuccess?(eventDataElement)
                         break
                     case .vaultClosed:
-                        let eventDataElement = try decoder.decode(ElementEventResponse.self, from: jsonData)
+                        _ = try decoder.decode(ElementEventResponse.self, from: jsonData)
                         self.closeSubWebView()
                         self.ProcessingEnded("vault closed")
                         break
@@ -79,6 +87,10 @@ extension DeunaSDK: WKScriptMessageHandler{
                         self.threeDsAuth=true
                         break
                     case .apmClickRedirect:
+                        break
+                    case .unknown:
+                        // Unknown event received
+                        self.log("Unknown event received: \(eventData.type)")
                         break
                     }
                     if self.closeOnEvents.contains(eventData.type ){
@@ -98,4 +110,5 @@ extension DeunaSDK: WKScriptMessageHandler{
             }
         }
     }
+    
 }

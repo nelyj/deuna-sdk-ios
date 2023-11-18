@@ -172,6 +172,13 @@ public enum CheckoutEventType: String, Codable {
     case vaultClosed = "vaultClosed"
     case vaultRedirect3DS = "vaultRedirect3DS"
     case paymentMethodsNotAvailable = "paymentMethodsNotAvailable"
+    case unknown
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let typeString = try container.decode(String.self)
+        self = CheckoutEventType(rawValue: typeString) ?? .unknown
+    }
 }
 
 

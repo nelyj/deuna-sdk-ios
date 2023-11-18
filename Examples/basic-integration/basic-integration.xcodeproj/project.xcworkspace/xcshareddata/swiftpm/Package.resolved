@@ -21,10 +21,10 @@
     {
       "identity" : "deuna-sdk-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/deuna-developers/deuna-sdk-ios",
+      "location" : "https://github.com/nelyj/deuna-sdk-ios/",
       "state" : {
-        "revision" : "fcfd4991a16ba1d039414a19369be87a87101790",
-        "version" : "1.0.0"
+        "branch" : "hotfix/sdk-issues-after-load-in-demo",
+        "revision" : "033137b4d52373f5f5cd8b185540d74e751f9b33"
       }
     }
   ],
